@@ -1,9 +1,60 @@
 #include <iostream>
-
 using namespace std;
 
-int main()
-{
-    cout << "Hello world!" << endl;
+int main() {
+    int b[6][7] = {0};
+    int p = 1;
+    int col;
+    bool gameOver = false;
+
+    do {
+        for(int i=0; i<6; i++) {
+            for(int j=0; j<7; j++) {
+                if(b[i][j]==-1) cout<<"X";
+                else if(b[i][j]==-2) cout<<"O";
+                else cout<<".";
+                if(j<6) cout<<"|";
+            }
+            cout << endl;
+        }
+
+        cout << "Player " << p << ", alege coloana 1-7: ";
+        cin >> col;
+        col--;
+        if(col < 0 || col > 6) continue;
+
+        int row = -1;
+        for(int i=5; i>=0; i--) {
+            if(b[i][col]==0) {
+                row = i;
+                break;
+            }
+        }
+        if(row == -1) continue;
+
+        if(p==1) b[row][col] = -1;
+        else b[row][col] = -2;
+
+        bool win = false;
+        for(int i=0; i<6; i++) {
+            for(int j=0; j<7; j++) {
+                int player = b[i][j];
+                if(player == 0) continue;
+                if(j+3 < 7 && player==b[i][j+1] && player==b[i][j+2] && player==b[i][j+3]) win = true;
+                if(i+3 < 6 && player==b[i+1][j] && player==b[i+2][j] && player==b[i+3][j]) win = true;
+                if(i+3 < 6 && j+3 < 7 && player==b[i+1][j+1] && player==b[i+2][j+2] && player==b[i+3][j+3]) win = true;
+                if(i+3 < 6 && j-3 >= 0 && player==b[i+1][j-1] && player==b[i+2][j-2] && player==b[i+3][j-3]) win = true;
+            }
+        }
+
+        if(win) {
+            cout << "Player " << p << " wins!" << endl;
+            gameOver = true;
+        }
+
+        if(!gameOver) p = (p==1) ? 2 : 1;
+
+    } while(!gameOver);
+
     return 0;
 }
