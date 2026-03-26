@@ -1,6 +1,18 @@
 #include <iostream>
 using namespace std;
 
+void drawBoard(int b[6][7]) {
+    for(int i=0; i<6; i++) {
+        for(int j=0; j<7; j++) {
+            if(b[i][j]==-1) cout<<"X";
+            else if(b[i][j]==-2) cout<<"O";
+            else cout<<".";
+            if(j<6) cout<<"|";
+        }
+        cout << endl;
+    }
+}
+
 int main() {
     int b[6][7] = {0};
     int p = 1;
@@ -8,15 +20,7 @@ int main() {
     bool gameOver = false;
 
     do {
-        for(int i=0; i<6; i++) {
-            for(int j=0; j<7; j++) {
-                if(b[i][j]==-1) cout<<"X";
-                else if(b[i][j]==-2) cout<<"O";
-                else cout<<".";
-                if(j<6) cout<<"|";
-            }
-            cout << endl;
-        }
+        drawBoard(b);
 
         cout << "Player " << p << ", alege coloana 1-7: ";
         cin >> col;
@@ -48,6 +52,7 @@ int main() {
         }
 
         if(win) {
+            drawBoard(b);
             cout << "Player " << p << " wins!" << endl;
             gameOver = true;
         }
