@@ -1,15 +1,20 @@
 #include <iostream>
 using namespace std;
 
+void drawBoardRow(int rowArray[7]) {
+    for(int j=0; j<7; j++) {
+        if(rowArray[j] == -1) cout << "X";
+        else if(rowArray[j] == -2) cout << "O";
+        else cout << ".";
+
+        if(j < 6) cout << "|";
+    }
+    cout << endl;
+}
+
 void drawBoard(int b[6][7]) {
     for(int i=0; i<6; i++) {
-        for(int j=0; j<7; j++) {
-            if(b[i][j]==-1) cout<<"X";
-            else if(b[i][j]==-2) cout<<"O";
-            else cout<<".";
-            if(j<6) cout<<"|";
-        }
-        cout << endl;
+        drawBoardRow(b[i]);
     }
 }
 
@@ -29,14 +34,14 @@ int main() {
 
         int row = -1;
         for(int i=5; i>=0; i--) {
-            if(b[i][col]==0) {
+            if(b[i][col] == 0) {
                 row = i;
                 break;
             }
         }
         if(row == -1) continue;
 
-        if(p==1) b[row][col] = -1;
+        if(p == 1) b[row][col] = -1;
         else b[row][col] = -2;
 
         bool win = false;
@@ -57,7 +62,7 @@ int main() {
             gameOver = true;
         }
 
-        if(!gameOver) p = (p==1) ? 2 : 1;
+        if(!gameOver) p = (p == 1) ? 2 : 1;
 
     } while(!gameOver);
 
