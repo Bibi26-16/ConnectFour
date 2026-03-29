@@ -1,13 +1,13 @@
 #include <iostream>
 using namespace std;
 
-// New function to draw only one row
+//New function to draw only one row
 void drawBoardRow(int rowArray[7]) {
     for(int j=0; j<7; j++) {
         if(rowArray[j] == -1) cout << "X";
         else if(rowArray[j] == -2) cout << "O";
         else cout << ".";
-        
+
         if(j < 6) cout << "|";
     }
     cout << endl;
