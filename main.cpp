@@ -1,7 +1,6 @@
 #include <iostream>
 using namespace std;
 
-//New function to draw only one row
 void drawBoardRow(int rowArray[7]) {
     for(int j=0; j<7; j++) {
         if(rowArray[j] == -1) cout << "X";
@@ -19,6 +18,20 @@ void drawBoard(int b[6][7]) {
     }
 }
 
+bool checkWin(int b[6][7]) {
+    for(int i=0; i<6; i++) {
+        for(int j=0; j<7; j++) {
+            int player = b[i][j];
+            if(player == 0) continue;
+            if(j+3 < 7 && player==b[i][j+1] && player==b[i][j+2] && player==b[i][j+3]) return true;
+            if(i+3 < 6 && player==b[i+1][j] && player==b[i+2][j] && player==b[i+3][j]) return true;
+            if(i+3 < 6 && j+3 < 7 && player==b[i+1][j+1] && player==b[i+2][j+2] && player==b[i+3][j+3]) return true;
+            if(i+3 < 6 && j-3 >= 0 && player==b[i+1][j-1] && player==b[i+2][j-2] && player==b[i+3][j-3]) return true;
+        }
+    }
+    return false;
+}
+
 int main() {
     int b[6][7] = {0};
     int p = 1;
@@ -27,10 +40,10 @@ int main() {
 
     do {
         drawBoard(b);
-
         cout << "Player " << p << ", alege coloana 1-7: ";
         cin >> col;
         col--;
+
         if(col < 0 || col > 6) continue;
 
         int row = -1;
@@ -42,22 +55,9 @@ int main() {
         }
         if(row == -1) continue;
 
-        if(p == 1) b[row][col] = -1;
-        else b[row][col] = -2;
+        b[row][col] = (p == 1) ? -1 : -2;
 
-        bool win = false;
-        for(int i=0; i<6; i++) {
-            for(int j=0; j<7; j++) {
-                int player = b[i][j];
-                if(player == 0) continue;
-                if(j+3 < 7 && player==b[i][j+1] && player==b[i][j+2] && player==b[i][j+3]) win = true;
-                if(i+3 < 6 && player==b[i+1][j] && player==b[i+2][j] && player==b[i+3][j]) win = true;
-                if(i+3 < 6 && j+3 < 7 && player==b[i+1][j+1] && player==b[i+2][j+2] && player==b[i+3][j+3]) win = true;
-                if(i+3 < 6 && j-3 >= 0 && player==b[i+1][j-1] && player==b[i+2][j-2] && player==b[i+3][j-3]) win = true;
-            }
-        }
-
-        if(win) {
+        if(checkWin(b)) {
             drawBoard(b);
             cout << "Player " << p << " wins!" << endl;
             gameOver = true;
