@@ -6,7 +6,6 @@ void drawBoardRow(int rowArray[7]) {
         if(rowArray[j] == -1) cout << "X";
         else if(rowArray[j] == -2) cout << "O";
         else cout << ".";
-
         if(j < 6) cout << "|";
     }
     cout << endl;
@@ -18,7 +17,7 @@ void drawBoard(int b[6][7]) {
     }
 }
 
-bool checkWin(int b[6][7]) {
+bool isWin(int b[6][7]) {
     for(int i=0; i<6; i++) {
         for(int j=0; j<7; j++) {
             int player = b[i][j];
@@ -53,11 +52,13 @@ int main() {
                 break;
             }
         }
+
         if(row == -1) continue;
 
-        b[row][col] = (p == 1) ? -1 : -2;
+        if(p == 1) b[row][col] = -1;
+        else b[row][col] = -2;
 
-        if(checkWin(b)) {
+        if(isWin(b)) {
             drawBoard(b);
             cout << "Player " << p << " wins!" << endl;
             gameOver = true;
