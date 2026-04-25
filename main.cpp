@@ -31,6 +31,15 @@ bool isWin(int b[6][7]) {
     return false;
 }
 
+int checkAvailableRow(int b[6][7], int col) {
+    for(int i = 5; i >= 0; i--) {
+        if(b[i][col] == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 int main() {
     int b[6][7] = {0};
     int p = 1;
@@ -45,14 +54,7 @@ int main() {
 
         if(col < 0 || col > 6) continue;
 
-        int row = -1;
-        for(int i=5; i>=0; i--) {
-            if(b[i][col] == 0) {
-                row = i;
-                break;
-            }
-        }
-
+        int row = checkAvailableRow(b, col);
         if(row == -1) continue;
 
         if(p == 1) b[row][col] = -1;
