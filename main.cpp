@@ -17,6 +17,15 @@ void drawBoard(int b[6][7]) {
     }
 }
 
+int checkAvailableRow(int col, int b[6][7]) {
+    for(int i=5; i>=0; i--) {
+        if(b[i][col] == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 bool isWin(int b[6][7]) {
     for(int i=0; i<6; i++) {
         for(int j=0; j<7; j++) {
@@ -29,15 +38,6 @@ bool isWin(int b[6][7]) {
         }
     }
     return false;
-}
-
-int checkAvailableRow(int b[6][7], int col) {
-    for(int i = 5; i >= 0; i--) {
-        if(b[i][col] == 0) {
-            return i;
-        }
-    }
-    return -1;
 }
 
 int main() {
@@ -54,7 +54,8 @@ int main() {
 
         if(col < 0 || col > 6) continue;
 
-        int row = checkAvailableRow(b, col);
+        int row = checkAvailableRow(col, b);
+
         if(row == -1) continue;
 
         if(p == 1) b[row][col] = -1;
